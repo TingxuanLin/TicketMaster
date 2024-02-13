@@ -20,7 +20,7 @@ public class TicketMasterAPI {
     //{"address":"","distance":0,"item_id":"Z7r9jZ1AdJ9AK",
     //"image_url":"https://s1.ticketm.net/dam/a/c70/98044e71-9085-471b-9f21-78525c745c70_1340061_RECOMENDATION_16_9.jpg",
     //"name":"Minnesota Timberwolves vs. Phoenix Suns","rating":0,
-    //"categories":["Sports"],"url":"https://www.ticketmaster.com/event/Z7r9jZ1AdJ9AK"}
+    //"categories":["Sports"],"url":"https://www.ticketmaster.com/event/Z7r9jZ1AdJ9AK"
 
 
     private static final String URL = "https://app.ticketmaster.com/discovery/v2/events.json";
