@@ -2,7 +2,9 @@ package com.example.ticketmaster.rpc;
 
 import com.example.ticketmaster.db.DBConnection;
 import com.example.ticketmaster.db.DBConnectionFactory;
+import com.example.ticketmaster.entity.Item;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,13 +12,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.json.*;
 
 /**
  * @author lintingxuan
  * @create 2024-02-13 10:30 AM
  */
-public class itemHistory {
+@WebServlet("/history")
+public class itemHistory extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -24,15 +29,29 @@ public class itemHistory {
      */
     public itemHistory() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
      * @see HttpServlet doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+        String userId = request.getParameter("user_id");
+        JSONArray array = new JSONArray();
+
+        DBConnection conn = DBConnectionFactory.getConnection();
+        Set<Item> items = conn.getFavoriteItems(userId);
+
+        for (Item item : items) {
+            JSONObject obj = item.toJSONObject();
+            try {
+                obj.append("favorite", true);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            array.put(obj);
+        }
+
+        RpcHelper.writeJsonArray(response, array);
     }
 
     /**

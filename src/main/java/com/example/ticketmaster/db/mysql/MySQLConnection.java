@@ -20,7 +20,7 @@ import java.util.Set;
 
     public MySQLConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance(); // 解决某些Java版本无法reflection
+            Class.forName("com.mysql.jdbc.Driver").getConstructor().newInstance(); // 解决某些Java版本无法reflection
             conn = DriverManager.getConnection(MySQLDBUtil.URL);
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,11 +109,47 @@ import java.util.Set;
 
     @Override
     public Set<String> getFavoriteItemIds(String userId) {
-        return null;
+        if (conn == null) {
+            return new HashSet<>();
+        }
+
+        Set<String> favoriteItemIds = new HashSet<>();
+
+        try {
+            String sql = "SELECT item_id from history where user_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String itemId = rs.getString("item_id");
+                favoriteItemIds.add(itemId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return favoriteItemIds;
     }
 
     public Set<String> getCategories(String itemId) {
-        return null;
+        if (conn == null) {
+            return new HashSet<>();
+        }
+
+        Set<String> categories = new HashSet<>();
+
+        try {
+            String sql = "SELECT category FROM categories WHERE item_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, itemId);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                categories.add(rs.getString("categories"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categories;
     }
 
     @Override
@@ -172,6 +208,8 @@ import java.util.Set;
         return false;
     }
 
-
+    public static void main(String[] args) {
+        MySQLConnection connection = new MySQLConnection();
+    }
 }
 
