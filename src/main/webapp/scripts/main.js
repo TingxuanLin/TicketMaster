@@ -72,7 +72,7 @@
                  if (!items || items.length === 0) {
                      showWarningMessage('No nearby item.');
                  } else {
-                     // listItems(items);
+                     listItems(items);
                  }
              },
              function() {
