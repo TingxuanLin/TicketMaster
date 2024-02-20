@@ -68,7 +68,7 @@ public class MySQLTableCreation {
                     + "item_id VARCHAR(255) NOT NULL,"
                     + "last_favor_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                     + "PRIMARY KEY (user_id, item_id),"
-                    + "FOREIGN KEY (user_id) REFERENCES users(user_id)"
+                    + "FOREIGN KEY (user_id) REFERENCES users(user_id),"
                     + "FOREIGN KEY (item_id) REFERENCES items(item_id)"
                     + ")";
             statement.executeUpdate(sql);

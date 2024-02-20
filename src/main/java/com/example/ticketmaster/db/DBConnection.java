@@ -28,7 +28,7 @@ public interface DBConnection {
 
     public String getFullName(String userId);
 
-    public boolean verifyLogin(String username, String password);
+    public boolean verifyLogin(String userId, String password);
 
 
 
