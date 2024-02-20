@@ -16,6 +16,9 @@ ul {
     list-style: none;
 }
 
+/**
+ * top header
+ */
 .top-header {
     align-items: center;
     background: #DF574B;
@@ -28,7 +31,7 @@ ul {
     z-index: 1;
 }
 
-#avatar {
+.avatar {
     background: #FFFFFF;
     border-radius: 50%;
     color: #333C4D;
@@ -39,6 +42,9 @@ ul {
     width: 40px;
 }
 
+/**
+ * top navigation
+ */
 .top-nav {
     flex: 1;
 }
@@ -50,16 +56,27 @@ ul {
     text-decoration: none;
 }
 
+#welcome-msg {
+    border-right: 1px solid #FFFFFF;
+    padding-right: 10px;
+}
+
+/**
+ * main container
+ */
 .container {
     margin: 60px auto;
     max-width: 1000px;
     min-width: 600px;
 }
 
+/**
+ * main header
+ */
 .container>header {
     align-items: center;
     background:
-            url("/image/pexels-pixabay-262978.jpg")
+            url('/images/pexels-pixabay-262978.jpg')
             no-repeat 50% 50%;
     background-size: 100%;
     display: flex;
@@ -79,10 +96,16 @@ ul {
     color: #FBAF41;
 }
 
+/**
+ * main section
+ */
 .main-section {
     background: #F3BB43;
 }
 
+/**
+ * aside
+ */
 #item-nav {
     float: left;
     width: 180px;
@@ -94,6 +117,9 @@ ul {
     text-align: center;
 }
 
+/**
+ * main navigation
+ */
 .main-nav-btn {
     background: none;
     border-top: 1px solid #FFFFFF;
@@ -118,6 +144,9 @@ ul {
     width: 20px;
 }
 
+/**
+ * item list
+ */
 #item-list {
     background: #F2EBD9;
     color: #624630;
@@ -133,6 +162,9 @@ ul {
     text-align: center;
 }
 
+/**
+ * item
+ */
 .item {
     align-items: center;
     border-bottom: 1px solid #FFFFFF;
@@ -174,7 +206,7 @@ ul {
 }
 
 .item-address {
-    line-height: 20px; /* vertical center */
+    line-height: 20px;
     padding-right: 20px;
     text-align: right;
 }
@@ -189,7 +221,7 @@ ul {
     border-left: 1px solid #FFFFFF;
     cursor: pointer;
     line-height: 60px;
-    text-align: center; /* horizontal center */
+    text-align: center;
     width: 60px;
 }
 
@@ -197,6 +229,9 @@ ul {
     color: #F13F3F;
 }
 
+/**
+ * footer section
+ */
 footer {
     background: #434343;
     font-size: 0.8em;
