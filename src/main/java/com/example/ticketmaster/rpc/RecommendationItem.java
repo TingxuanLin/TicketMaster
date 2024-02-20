@@ -6,6 +6,8 @@ package com.example.ticketmaster.rpc;
  */
 
 import com.example.ticketmaster.algorithm.GeoRecommendation;
+import com.example.ticketmaster.db.DBConnection;
+import com.example.ticketmaster.db.DBConnectionFactory;
 import com.example.ticketmaster.entity.Item;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.json.*;
 
@@ -35,24 +38,31 @@ public class RecommendationItem extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userId = request.getParameter("user_id");
-        double lat = Double.parseDouble(request.getParameter("lat"));
-        double lon = Double.parseDouble(request.getParameter("lon"));
-
-        GeoRecommendation recommendation = new GeoRecommendation();
-        List<Item> items = recommendation.recommendItems(userId, lat, lon);
-
-        JSONArray result = new JSONArray();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        JSONArray array = new JSONArray();
         try {
+            String userId = request.getParameter("user_id");
+            double lat = Double.parseDouble(request.getParameter("lat"));
+            double lon = Double.parseDouble(request.getParameter("lon"));
+            String keyWord = request.getParameter("term");
+
+            DBConnection conn = DBConnectionFactory.getConnection();
+            List<Item> items = conn.searchItems(lat, lon, keyWord);
+            conn.close();
+
+            Set<String> favorite = conn.getFavoriteItemIds(userId);
+
             for (Item item : items) {
-                result.put(item.toJSONObject());
+                JSONObject obj = item.toJSONObject();
+
+                obj.put("favorite", favorite.contains(item.getItemId()));
+                array.put(obj);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        RpcHelper.writeJsonArray(response, result);
+        RpcHelper.writeJsonArray(response, array);
     }
 
     /**
